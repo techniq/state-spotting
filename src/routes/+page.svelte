@@ -1,14 +1,11 @@
 <script>
+	import { Chart, GeoPath, Layer } from 'layerchart';
 	import { geoAlbersUsa } from 'd3-geo';
 	import { feature } from 'topojson-client';
-	import { Chart, GeoPath, Layer } from 'layerchart';
 	import { cls } from '@layerstack/tailwind';
-	import { Button } from 'svelte-ux';
 
 	let { data } = $props();
 	const states = feature(data.geojson, data.geojson.objects.states);
-
-	$inspect({ states });
 
 	const selectedState = $state({
 		Alabama: true,
