@@ -3,6 +3,7 @@
 	import { geoAlbersUsa } from 'd3-geo';
 	import { feature } from 'topojson-client';
 	import { cls } from '@layerstack/tailwind';
+	import { cubicOut } from 'svelte/easing';
 
 	let { data } = $props();
 	const states = feature(data.geojson, data.geojson.objects.states);
@@ -121,6 +122,11 @@
 			projection: geoAlbersUsa,
 			fitGeojson: states
 		}}
+		transform={{
+			mode: 'canvas',
+			initialScrollMode: 'scale',
+			motion: { type: 'tween', duration: 800, easing: cubicOut }
+		}}
 	>
 		<Layer type="svg">
 			{#each states.features as state}
@@ -154,7 +160,7 @@
 								value={abbreviations[state.properties.name]}
 								textAnchor="middle"
 								verticalAnchor="middle"
-								class="stroke-surface-100 stroke-2 text-lg"
+								class="pointer-events-none stroke-surface-100 stroke-2 text-lg"
 							/>
 							<Text
 								{x}
@@ -163,7 +169,7 @@
 								value={state.properties.name}
 								textAnchor="middle"
 								verticalAnchor="middle"
-								class="fill-surface-content stroke-surface-100 stroke-2 text-[8px]"
+								class="pointer-events-none fill-surface-content stroke-surface-100 stroke-2 text-[8px]"
 							/>
 						{/snippet}
 					</GeoPath>
